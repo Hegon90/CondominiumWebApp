@@ -18,15 +18,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.PropertyType)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Block)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Owner)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Street)
-            </th>
+            <th>Bloque</th>
+            <th>Calle</th>
+            <th>Propietario</th>
             <th>
                 @Html.DisplayNameFor(model => model.PropertyDate)
             </th>
@@ -42,33 +36,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PropertyType)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Block.BlockId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Owner.OwnerId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Street.StreetId)
-            </td>
+            <td>@Html.DisplayFor(modelItem => item.Block.BlockName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Street.StreetNumber)</td>
+            <td>@($"{item.Owner.OwnerName} {item.Owner.OwnerSurname}")</td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.PropertyDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.PropertyId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.PropertyId">Detalles</a> |
+                @*<a asp-action="Edit" asp-route-id="@item.PropertyId">Editar</a> |*@
+                @*<a asp-action="Details" asp-route-id="@item.PropertyId">Detalles</a> |*@
                 <a asp-action="Delete" asp-route-id="@item.PropertyId">Eliminar</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
-
-
-
-
-
-
-
-
-

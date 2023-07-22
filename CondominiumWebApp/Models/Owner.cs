@@ -8,7 +8,7 @@ public partial class Owner
 {
     [Key]
     public int OwnerId { get; set; }
-    [Required]
+
     [Display(Name = "Nombre")]
     public string OwnerName { get; set; } = null!;
     [Display(Name = "Apellido")]
@@ -17,4 +17,5 @@ public partial class Owner
     public int? PhoneNumber { get; set; }
 
     public virtual ICollection<Property> Properties { get; set; } = new List<Property>();
+    public string OwnerFullName => $"{OwnerName} {OwnerSurname}";
 }

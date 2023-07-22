@@ -8,7 +8,6 @@ public partial class Block
 {
     [Key]
     public int BlockId { get; set; }
-    [Required]
     [Display(Name = "Bloque")]
     public string BlockName { get; set; } = null!;
 

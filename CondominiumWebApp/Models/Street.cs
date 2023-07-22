@@ -8,7 +8,7 @@ public partial class Street
 {
     [Key]
     public int StreetId { get; set; }
-    [Required]
+
     public int StreetNumber { get; set; }
 
     public virtual ICollection<Property> Properties { get; set; } = new List<Property>();

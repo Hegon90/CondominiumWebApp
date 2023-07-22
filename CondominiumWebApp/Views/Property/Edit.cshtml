@@ -4,24 +4,26 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Editar</h1>
 
-<h4>Property</h4>
+<h4>Propiedad</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="PropertyId" />
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="PropertyPasscode" class="control-label"></label>
-                <input asp-for="PropertyPasscode" class="form-control" />
+                <input asp-for="PropertyPasscode" class="form-control" disabled />
                 <span asp-validation-for="PropertyPasscode" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PropertyType" class="control-label"></label>
-                <input asp-for="PropertyType" class="form-control" />
-                <span asp-validation-for="PropertyType" class="text-danger"></span>
+                <select asp-for="PropertyType" class="form-control">
+                    <option>Casa</option>
+                    <option>Lote</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="BlockId" class="control-label"></label>
@@ -39,19 +41,54 @@
                 <span asp-validation-for="OwnerId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PropertyDate" class="control-label"></label>
-                <input asp-for="PropertyDate" class="form-control" />
-                <span asp-validation-for="PropertyDate" class="text-danger"></span>
+                <label asp-for="OwnerId" class="control-label"></label>
+                @Html.DropDownList("OwnerId", ViewBag.Owners as SelectList, "", new { @class = "form-control" })
+            </div>*@
+
+            <div class="form-group">
+                <label asp-for="PropertyType" class="control-label"></label>
+                <select asp-for="PropertyType" class="form-control">
+                    <option>Casa</option>
+                    <option>Lote</option>
+                </select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="BlockId" class="control-label"></label>
+                @Html.DropDownList("BlockId", ViewBag.Blocks as SelectList, "", new { @class = "form-control", @disabled = "disabled" })
+            </div>
+            <div class="form-group">
+                <label asp-for="StreetId" class="control-label"></label>
+                @Html.DropDownList("StreetId", ViewBag.Streets as SelectList, "", new { @class = "form-control", @disabled = "disabled" })
+                <span asp-validation-for="StreetId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PropertyNumber" class="control-label"></label>
+                <select asp-for="PropertyNumber" class="form-control" disabled>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="OwnerId" class="control-label"></label>
+                @Html.DropDownList("OwnerId", ViewBag.Owners as SelectList, "", new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="PropertyDate" class="control-label"></label>
+                <input asp-for="PropertyDate" class="form-control" type="date" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar</a>
 </div>
 
 @section Scripts {
