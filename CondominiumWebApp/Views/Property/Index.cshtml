@@ -9,9 +9,9 @@
 <p>
     <a asp-action="Create">Registrar</a>
 </p>
-<table class="table">
+<table class="table table-bordered">
     <thead>
-        <tr>
+        <tr class="table-primary table-bordered">
             <th>
                 @Html.DisplayNameFor(model => model.PropertyPasscode)
             </th>
@@ -30,7 +30,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr class="table-info">
             <td>
                 @Html.DisplayFor(modelItem => item.PropertyPasscode)
             </td>

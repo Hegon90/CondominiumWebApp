@@ -1,0 +1,18 @@
+﻿body, .custom-background {
+    background: rgb(30,113,242);
+    background: linear-gradient(180deg, rgba(30,113,242,1) 0%, rgba(0,0,0,0.9304096638655462) 50%, rgba(0,212,255,1) 100%);
+}
+
+.card {
+    border: 0.5px solid black;
+    margin-top: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-body {
+    width: 50%;
+}
+
+
