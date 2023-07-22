@@ -58,21 +58,64 @@ namespace CondominiumWebApp.Controllers
         // POST: Property/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("PropertyId,PropertyPasscode,PropertyType,BlockId,StreetId,OwnerId,PropertyDate")] Property @property)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(@property);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    else
+        //    {
+        //        // The model state is not valid, so manually add the values to the database
+        //        var propertyToAdd = new Property
+        //        {
+        //            PropertyPasscode = @property.PropertyPasscode,
+        //            PropertyType = @property.PropertyType,
+        //            BlockId = @property.BlockId,
+        //            StreetId = property.StreetId,
+        //            OwnerId = property.OwnerId,
+        //            PropertyDate = DateTime.Today.AddDays(2),
+        //        };
+
+        //        _context.Add(propertyToAdd);
+        //        await _context.SaveChangesAsync();
+
+        //        // Redirect to the same Create view to display validation errors
+        //        ViewData["BlockId"] = new SelectList(_context.Blocks, "BlockId", "BlockId", @property.BlockId);
+        //        ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerId", @property.OwnerId);
+        //        ViewData["StreetId"] = new SelectList(_context.Streets, "StreetId", "StreetId", @property.StreetId);
+        //        return View(@property);
+        //    }
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PropertyId,PropertyPasscode,PropertyType,BlockId,StreetId,OwnerId,PropertyDate")] Property @property)
         {
-            if (ModelState.IsValid)
+            var propertyToAdd = new Property
             {
-                _context.Add(@property);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+                PropertyPasscode = @property.PropertyPasscode,
+                PropertyType = @property.PropertyType,
+                BlockId = @property.BlockId,
+                StreetId = property.StreetId,
+                OwnerId = property.OwnerId,
+                PropertyDate = DateTime.Today.AddDays(5),
+            };
+
+            _context.Add(propertyToAdd);
+            await _context.SaveChangesAsync();
+
+            // Redirect to the same Create view to display validation errors
             ViewData["BlockId"] = new SelectList(_context.Blocks, "BlockId", "BlockId", @property.BlockId);
             ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerId", @property.OwnerId);
             ViewData["StreetId"] = new SelectList(_context.Streets, "StreetId", "StreetId", @property.StreetId);
             return View(@property);
         }
+
 
         // GET: Property/Edit/5
         public async Task<IActionResult> Edit(int? id)
