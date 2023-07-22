@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CondominiumWebApp.Models;
@@ -11,16 +8,16 @@ public partial class Property
     public int PropertyId { get; set; }
     
     [Display(Name = "Codigo")]
-    public string PropertyPasscode { get; set; } = null!;
+    public string? PropertyPasscode { get; set; }
     
     [Display(Name = "Categoria")]
     public string PropertyType { get; set; } = null!;
 
     [Display(Name = "Bloque")]
-    public int BlockId { get; set; }
+    public int? BlockId { get; set; }
     
     [Display(Name = "Calle")]
-    public int StreetId { get; set; }
+    public int? StreetId { get; set; }
 
 
     [Display(Name = "Propietario")]
