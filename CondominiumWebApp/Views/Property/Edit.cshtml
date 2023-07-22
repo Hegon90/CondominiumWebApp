@@ -1,4 +1,4 @@
-﻿@model CondominiumWebApp.Models.Property
+﻿@model CondominiumWebApp.Models.PropertyEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -16,115 +16,29 @@
 
             <div class="form-group">
                 <label asp-for="PropertyPasscode" class="control-label"></label>
-                <input asp-for="PropertyPasscode" class="form-control" type="text" />
-                <span asp-validation-for="PropertyPasscode" class="text-danger"></span>
+                <input asp-for="PropertyPasscode" class="form-control" type="text" required/>
+                <span asp-validation-for="PropertyPasscode" class="text-danger" required></span>
             </div>
             <div class="form-group">
                 <label asp-for="PropertyType" class="control-label"></label>
-                <select asp-for="PropertyType" class="form-control">
+                <select asp-for="PropertyType" class="form-control" required>
                     <option></option>
                     <option>Casa</option>
                     <option>Lote</option>
                     <option>Piscina</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="BlockId" class="control-label"></label>
-                @Html.DropDownList("BlockId", ViewBag.Blocks as SelectList, "", new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                <label asp-for="StreetId" class="control-label"></label>
-                @Html.DropDownList("StreetId", ViewBag.Streets as SelectList, "", new { @class = "form-control" })
-                <span asp-validation-for="StreetId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PropertyNumber" class="control-label"></label>
-                <select asp-for="PropertyNumber" class="form-control">
-                    <option></option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
+                <span asp-validation-for="PropertyType" class="text-danger" required></span>
             </div>
             <div class="form-group">
                 <label asp-for="OwnerId" class="control-label"></label>
-                @Html.DropDownList("OwnerId", ViewBag.Owners as SelectList, "", new { @class = "form-control" })
+                @Html.DropDownList("OwnerId", ViewBag.Owners as SelectList, "", new { @class = "form-control", @required = "required" })
             </div>
             <div class="form-group">
                 <label asp-for="PropertyDate" class="control-label"></label>
-                <input asp-for="PropertyDate" class="form-control" type="date" />
+                <input asp-for="PropertyDate" class="form-control" type="date" required/>
+                <span asp-validation-for="PropertyDate" class="text-danger" required></span>
             </div>
             
-
-            @*<div class="form-group">
-                <label asp-for="PropertyPasscode" class="control-label"></label>
-                <input asp-for="PropertyPasscode" class="form-control" disabled />
-                <span asp-validation-for="PropertyPasscode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PropertyType" class="control-label"></label>
-                <select asp-for="PropertyType" class="form-control">
-                    <option>Casa</option>
-                    <option>Lote</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="BlockId" class="control-label"></label>
-                <select asp-for="BlockId" class="form-control" asp-items="ViewBag.BlockId"></select>
-                <span asp-validation-for="BlockId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StreetId" class="control-label"></label>
-                <select asp-for="StreetId" class="form-control" asp-items="ViewBag.StreetId"></select>
-                <span asp-validation-for="StreetId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="OwnerId" class="control-label"></label>
-                <select asp-for="OwnerId" class="form-control" asp-items="ViewBag.OwnerId"></select>
-                <span asp-validation-for="OwnerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="OwnerId" class="control-label"></label>
-                @Html.DropDownList("OwnerId", ViewBag.Owners as SelectList, "", new { @class = "form-control" })
-            </div>*@
-
-            @*<div class="form-group">
-                <label asp-for="PropertyType" class="control-label"></label>
-                <select asp-for="PropertyType" class="form-control">
-                    <option>Casa</option>
-                    <option>Lote</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="BlockId" class="control-label"></label>
-                @Html.DropDownList("BlockId", ViewBag.Blocks as SelectList, "", new { @class = "form-control", @disabled = "disabled" })
-            </div>
-            <div class="form-group">
-                <label asp-for="StreetId" class="control-label"></label>
-                @Html.DropDownList("StreetId", ViewBag.Streets as SelectList, "", new { @class = "form-control", @disabled = "disabled" })
-                <span asp-validation-for="StreetId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PropertyNumber" class="control-label"></label>
-                <select asp-for="PropertyNumber" class="form-control" disabled>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="OwnerId" class="control-label"></label>
-                @Html.DropDownList("OwnerId", ViewBag.Owners as SelectList, "", new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                <label asp-for="PropertyDate" class="control-label"></label>
-                <input asp-for="PropertyDate" class="form-control" type="date" />
-            </div>*@
-
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>

@@ -54,7 +54,7 @@ namespace CondominiumWebApp.Controllers
         // POST: PropertyController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PropertyId,PropertyPasscode,PropertyType,BlockId,StreetId,OwnerId,PropertyDate")] Property @property)
+        public async Task<IActionResult> Create([Bind("PropertyId,PropertyPasscode,PropertyType,BlockId,StreetId,OwnerId,PropertyDate,PropertyNumber")] Property @property)
         {
             ModelState.Remove("Block");
             ModelState.Remove("Street");
@@ -71,6 +71,7 @@ namespace CondominiumWebApp.Controllers
                     PropertyType = @property.PropertyType,
                     BlockId = @property.BlockId,
                     StreetId = @property.StreetId,
+                    PropertyNumber = @property.PropertyNumber, 
                     OwnerId = @property.OwnerId,
                     PropertyDate = @property.PropertyDate,
                 };
@@ -85,50 +86,124 @@ namespace CondominiumWebApp.Controllers
             return View(@property);
         }
 
-        // GET: Property/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        //// GET: Property/Edit/5
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null || _context.Properties == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var @property = await _context.Properties.FindAsync(id);
+        //    if (@property == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    ViewData["BlockId"] = new SelectList(_context.Blocks, "BlockId", "BlockName", @property.BlockId);
+        //    ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerFullName", @property.OwnerId);
+        //    ViewData["StreetId"] = new SelectList(_context.Streets, "StreetId", "StreetNumber", @property.StreetId);
+        //    return View(@property);
+        //}
+
+        //// POST: Property/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("PropertyId,PropertyPasscode,PropertyType,BlockId,StreetId,OwnerId,PropertyDate,PropertyNumber")] Property @property)
+        //{
+        //    if (id != @property.PropertyId)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    // Bypass validation for BlockId and StreetId fields
+        //    ModelState.Remove("PropertyPasscode");
+        //    ModelState.Remove("Block");
+        //    ModelState.Remove("Street");
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(@property);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!PropertyExists(@property.PropertyId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["BlockId"] = new SelectList(_context.Blocks, "BlockId", "BlockName", @property.BlockId);
+        //    ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerFullName", @property.OwnerId);
+        //    ViewData["StreetId"] = new SelectList(_context.Streets, "StreetId", "StreetNumber", @property.StreetId);
+        //    return View(@property);
+        //}
+
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || _context.Properties == null)
+            var property = await _context.Properties.FindAsync(id);
+            if (property == null)
             {
                 return NotFound();
             }
 
-            var @property = await _context.Properties.FindAsync(id);
-            if (@property == null)
+            var viewModel = new PropertyEditViewModel
             {
-                return NotFound();
-            }
-            ViewData["BlockId"] = new SelectList(_context.Blocks, "BlockId", "BlockName", @property.BlockId);
-            ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerFullName", @property.OwnerId);
-            ViewData["StreetId"] = new SelectList(_context.Streets, "StreetId", "StreetNumber", @property.StreetId);
-            return View(@property);
+                PropertyId = property.PropertyId,
+                PropertyPasscode = property.PropertyPasscode,
+                PropertyType = property.PropertyType,
+                OwnerId = property.OwnerId,
+                PropertyDate = property.PropertyDate
+            };
+
+            ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerFullName", viewModel.OwnerId);
+
+            return View(viewModel);
         }
 
-        // POST: Property/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PropertyId,PropertyPasscode,PropertyType,BlockId,StreetId,OwnerId,PropertyDate,PropertyNumber")] Property @property)
+        public async Task<IActionResult> Edit(int id, PropertyEditViewModel viewModel)
         {
-            if (id != @property.PropertyId)
+            if (id != viewModel.PropertyId)
             {
                 return NotFound();
             }
-
-            // Bypass validation for BlockId and StreetId fields
-            ModelState.Remove("PropertyPasscode");
-            ModelState.Remove("Block");
-            ModelState.Remove("Street");
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(@property);
+                    var property = await _context.Properties.FindAsync(id);
+                    if (property == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Update the specific properties you want to modify
+                    property.PropertyPasscode = viewModel.PropertyPasscode;
+                    property.PropertyType = viewModel.PropertyType;
+                    property.OwnerId = viewModel.OwnerId;
+                    property.PropertyDate = viewModel.PropertyDate;
+
+                    // Save the changes to the database
+                    _context.Update(property);
                     await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PropertyExists(@property.PropertyId))
+                    if (!PropertyExists(viewModel.PropertyId))
                     {
                         return NotFound();
                     }
@@ -137,13 +212,13 @@ namespace CondominiumWebApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["BlockId"] = new SelectList(_context.Blocks, "BlockId", "BlockName", @property.BlockId);
-            ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerFullName", @property.OwnerId);
-            ViewData["StreetId"] = new SelectList(_context.Streets, "StreetId", "StreetNumber", @property.StreetId);
-            return View(@property);
+
+            ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerFullName", viewModel.OwnerId);
+
+            return View(viewModel);
         }
+
 
         // GET: Property/Delete/5
         public async Task<IActionResult> Delete(int? id)

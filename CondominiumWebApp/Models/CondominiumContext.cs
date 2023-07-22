@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace CondominiumWebApp.Models;
 
@@ -75,6 +73,7 @@ public partial class CondominiumContext : DbContext
 
             entity.Property(e => e.PropertyId).HasColumnName("property_id");
             entity.Property(e => e.BlockId).HasColumnName("block_id");
+            entity.Property(e => e.PropertyNumber).HasColumnName("property_number");
             entity.Property(e => e.OwnerId).HasColumnName("owner_id");
             entity.Property(e => e.PropertyDate).HasColumnName("property_date");
             entity.Property(e => e.PropertyPasscode)

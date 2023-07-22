@@ -18,7 +18,7 @@
             <div class="form-group">
                 <div class="form-group">
                     <label asp-for="PropertyPasscode" class="control-label"></label>
-                    <input asp-for="PropertyPasscode" class="form-control" type="text"/>
+                    <input asp-for="PropertyPasscode" class="form-control" type="text" readonly/>
                     <span asp-validation-for="PropertyPasscode" class="text-danger"></span>
                 </div>
             </div>
@@ -30,19 +30,21 @@
                     <option>Lote</option>
                     <option>Piscina</option>
                 </select>
+                <span asp-validation-for="PropertyType" class="text-danger" required></span>
             </div>
             <div class="form-group">
                 <label asp-for="BlockId" class="control-label"></label>
-                @Html.DropDownList("BlockId", ViewBag.Blocks as SelectList, "", new { @class = "form-control" })
+                @Html.DropDownList("BlockId", ViewBag.Blocks as SelectList, "", new { @class = "form-control", @required = "required"})
+                <span asp-validation-for="BlockId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="StreetId" class="control-label"></label>
-                @Html.DropDownList("StreetId", ViewBag.Streets as SelectList, "", new { @class = "form-control" })
-                <span asp-validation-for="StreetId" class="text-danger"></span>
+                @Html.DropDownList("StreetId", ViewBag.Streets as SelectList, "", new { @class = "form-control", @required = "required"})
+                <span asp-validation-for="StreetId" class="text-danger" required></span>
             </div>
             <div class="form-group">
                 <label asp-for="PropertyNumber" class="control-label"></label>
-                <select asp-for="PropertyNumber" class="form-control">
+                <select asp-for="PropertyNumber" class="form-control" id="propertyNumberInput" required>
                     <option></option>
                     <option>1</option>
                     <option>2</option>
@@ -50,14 +52,17 @@
                     <option>4</option>
                     <option>5</option>
                 </select>
+                <span asp-validation-for="PropertyNumber" class="text-danger" required></span>
             </div>
             <div class="form-group">
                 <label asp-for="OwnerId" class="control-label"></label>
-                @Html.DropDownList("OwnerId", ViewBag.Owners as SelectList, "", new { @class = "form-control" })
+                @Html.DropDownList("OwnerId", ViewBag.Owners as SelectList, "", new { @class = "form-control", @required = "required" })
+                <span asp-validation-for="OwnerId" class="text-danger" required></span>
             </div>
             <div class="form-group">
                 <label asp-for="PropertyDate" class="control-label"></label>
-                <input asp-for="PropertyDate" class="form-control" type="date"/>
+                <input asp-for="PropertyDate" class="form-control" type="date" required/>
+                <span asp-validation-for="OwnerId" class="text-danger" required></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -74,4 +79,26 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        $(document).ready(function () {
+            $('#propertyNumberInput').on('change', function () {
+                updatePropertyPasscode();
+            });
+
+            $('#BlockId, #StreetId').on('change', function () {
+                updatePropertyPasscode();
+            });
+
+            function updatePropertyPasscode() {
+                var blockName = $('#BlockId option:selected').text();
+                var streetNumber = $('#StreetId option:selected').text();
+                var propertyNumber = $('#propertyNumberInput').val();
+
+                if (blockName && streetNumber && propertyNumber) {
+                    var propertyPasscode = 'P' + blockName + streetNumber + propertyNumber;
+                    $('#PropertyPasscode').val(propertyPasscode);
+                }
+            }
+        });
+    </script>
 }

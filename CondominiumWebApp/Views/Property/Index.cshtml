@@ -20,6 +20,7 @@
             </th>
             <th>Bloque</th>
             <th>Calle</th>
+            <th>Numero</th>
             <th>Propietario</th>
             <th>
                 @Html.DisplayNameFor(model => model.PropertyDate)
@@ -38,6 +39,7 @@
             </td>
             <td>@Html.DisplayFor(modelItem => item.Block.BlockName)</td>
             <td>@Html.DisplayFor(modelItem => item.Street.StreetNumber)</td>
+            <td>@Html.DisplayFor(modelItem => item.PropertyNumber)</td>
             <td>@($"{item.Owner.OwnerName} {item.Owner.OwnerSurname}")</td>
 
             <td>
