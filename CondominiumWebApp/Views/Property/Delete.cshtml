@@ -6,52 +6,57 @@
 
 <h1>Eliminar</h1>
 
-<h3>Esta seguro de eliminar esta propiedad?</h3>
+<h3>Seguro desea eliminar esta propiedad?</h3>
 <div>
-    <h4>Property</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PropertyPasscode)
+            Codigo
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PropertyPasscode)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PropertyType)
+            Categoria
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PropertyType)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PropertyDate)
+            Fecha
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PropertyDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Block)
+            Bloque
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Block.BlockId)
+            @Html.DisplayFor(model => model.Block.BlockName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Owner)
+            Calle
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Owner.OwnerId)
+            @Html.DisplayFor(model => model.Street.StreetNumber)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Street)
+            Numero
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Street.StreetId)
+            @Html.DisplayFor(model => model.PropertyNumber)
+        </dd>
+        <dt class="col-sm-2">
+            Propietario
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Owner.OwnerFullName)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="PropertyId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
         <a asp-action="Index">Regresar</a>
     </form>
 </div>

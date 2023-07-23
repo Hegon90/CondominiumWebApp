@@ -54,99 +54,53 @@ namespace CondominiumWebApp.Controllers
         // POST: PropertyController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PropertyId,PropertyPasscode,PropertyType,BlockId,StreetId,OwnerId,PropertyDate,PropertyNumber")] Property @property)
+        public async Task<IActionResult> Create([Bind("PropertyId,PropertyPasscode,PropertyType,BlockId,StreetId,OwnerId,PropertyDate,PropertyNumber")] Property property)
         {
             ModelState.Remove("Block");
             ModelState.Remove("Street");
 
             if (ModelState.IsValid)
             {
-                var block = await _context.Blocks.FindAsync(@property.BlockId);
-                var street = await _context.Streets.FindAsync(@property.StreetId);
+                // Check for duplicates
+                bool isDuplicate = await _context.Properties.AnyAsync(p => p.PropertyPasscode == property.PropertyPasscode);
 
+                if (isDuplicate)
+                {
+                    ModelState.AddModelError(nameof(property.PropertyPasscode), "Este codigo ya existe.");
+                    ViewData["BlockId"] = new SelectList(_context.Blocks, "BlockId", "BlockName", property.BlockId);
+                    ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerFullName", property.OwnerId);
+                    ViewData["StreetId"] = new SelectList(_context.Streets, "StreetId", "StreetNumber", property.StreetId);
+                    return View(property);
+                }
+
+                // Retrieve associated Block and Street entities
+                var block = await _context.Blocks.FindAsync(property.BlockId);
+                var street = await _context.Streets.FindAsync(property.StreetId);
+
+                // Create the new property
                 var propertyToAdd = new Property
                 {
-                    //PropertyPasscode = $"{@property.PropertyType.Substring(0, 1)}{block.BlockName}{street.StreetNumber}{@property.PropertyNumber}",
-                    PropertyPasscode = @property.PropertyPasscode,
-                    PropertyType = @property.PropertyType,
-                    BlockId = @property.BlockId,
-                    StreetId = @property.StreetId,
-                    PropertyNumber = @property.PropertyNumber, 
-                    OwnerId = @property.OwnerId,
-                    PropertyDate = @property.PropertyDate,
+                    PropertyPasscode = property.PropertyPasscode,
+                    PropertyType = property.PropertyType,
+                    BlockId = property.BlockId,
+                    StreetId = property.StreetId,
+                    PropertyNumber = property.PropertyNumber,
+                    OwnerId = property.OwnerId,
+                    PropertyDate = property.PropertyDate,
                 };
 
-                _context.Add(@property);
+                _context.Add(propertyToAdd);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BlockId"] = new SelectList(_context.Blocks, "BlockId", "BlockName", @property.BlockId);
-            ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerFullName", @property.OwnerId);
-            ViewData["StreetId"] = new SelectList(_context.Streets, "StreetId", "StreetNumber", @property.StreetId);
-            return View(@property);
+
+            ViewData["BlockId"] = new SelectList(_context.Blocks, "BlockId", "BlockName", property.BlockId);
+            ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerFullName", property.OwnerId);
+            ViewData["StreetId"] = new SelectList(_context.Streets, "StreetId", "StreetNumber", property.StreetId);
+            return View(property);
         }
 
-        //// GET: Property/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.Properties == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var @property = await _context.Properties.FindAsync(id);
-        //    if (@property == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["BlockId"] = new SelectList(_context.Blocks, "BlockId", "BlockName", @property.BlockId);
-        //    ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerFullName", @property.OwnerId);
-        //    ViewData["StreetId"] = new SelectList(_context.Streets, "StreetId", "StreetNumber", @property.StreetId);
-        //    return View(@property);
-        //}
-
-        //// POST: Property/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("PropertyId,PropertyPasscode,PropertyType,BlockId,StreetId,OwnerId,PropertyDate,PropertyNumber")] Property @property)
-        //{
-        //    if (id != @property.PropertyId)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    // Bypass validation for BlockId and StreetId fields
-        //    ModelState.Remove("PropertyPasscode");
-        //    ModelState.Remove("Block");
-        //    ModelState.Remove("Street");
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(@property);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!PropertyExists(@property.PropertyId))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["BlockId"] = new SelectList(_context.Blocks, "BlockId", "BlockName", @property.BlockId);
-        //    ViewData["OwnerId"] = new SelectList(_context.Owners, "OwnerId", "OwnerFullName", @property.OwnerId);
-        //    ViewData["StreetId"] = new SelectList(_context.Streets, "StreetId", "StreetNumber", @property.StreetId);
-        //    return View(@property);
-        //}
-
-
+        //GET: Property/Edit
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -170,6 +124,7 @@ namespace CondominiumWebApp.Controllers
             return View(viewModel);
         }
 
+        //POST: Property/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, PropertyEditViewModel viewModel)

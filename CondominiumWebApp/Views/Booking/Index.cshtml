@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CondominiumWebApp.Models.Booking>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista de Reservas</h1>
+
+<p>
+    <a asp-action="Create">Agregar</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr class="table-success table-bordered">
+            <th>
+                Area
+            </th>
+            <th>
+                Dia
+            </th>
+            <th>
+                Hora
+            </th>
+            <th>
+                Responsable
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="table-warning">
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingPlace)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BookingId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.BookingId">Ver</a> |
+                <a asp-action="Delete" asp-route-id="@item.BookingId">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

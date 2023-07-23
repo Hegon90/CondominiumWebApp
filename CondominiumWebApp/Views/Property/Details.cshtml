@@ -11,40 +11,46 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PropertyPasscode)
+            Codigo
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PropertyPasscode)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PropertyType)
+            Categoria
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PropertyType)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PropertyDate)
+            Fecha de Creacion
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PropertyDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Block)
+            Bloque
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Block.BlockId)
+            @Html.DisplayFor(model => model.Block.BlockName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Owner)
+            Calle
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Owner.OwnerId)
+            @Html.DisplayFor(model => model.Street.StreetNumber)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Street)
+            Numero
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Street.StreetId)
+            @Html.DisplayFor(model => model.PropertyNumber)
+        </dd>
+        <dt class="col-sm-2">
+            Propietario
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Owner.OwnerFullName)
         </dd>
     </dl>
 </div>
